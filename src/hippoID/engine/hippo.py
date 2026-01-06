@@ -8,6 +8,7 @@ from src.hippoID.utils.processing import verbose_print
 from src.hippoID.engine.facial_recognition import FacialRecognitionEngine
 from src.hippoID.engine.interaction import InteractionEngine
 from typing import Tuple
+import numpy as np
 
 class Hippo:
     def __init__(
@@ -29,7 +30,7 @@ class Hippo:
         )
         self.print = verbose_print(verbose=verbose)
 
-    def identify(self, image) -> Tuple[bool, str]: 
+    def identify(self, image: np.ndarray) -> Tuple[bool, str]: 
         try:
             self.print(f"{'-'*10}STARTING HIPPO IDENTIFICATION PROCESS{'-'*10}")
             self.print("\nSegmenting faces...")
@@ -42,15 +43,15 @@ class Hippo:
             
             self.print("\nSegmentation Done!")
             single_face, single_face_path = segmented_face, face_path
-            self.print(f"\nIdentifying person in {single_face_path}...")
+            self.print(f"\nIdentifying person...")
 
             is_known, possible_name = self.fre.is_known_face(single_face_path)
 
             if is_known:
-                self.print(f"\nPerson already known! :{possible_name}")
+                self.print(f"\nPerson already known!: {possible_name}")
                 return False, possible_name
             
-            self.print("\nAsking for person's name")
+            self.print("\nAsking for person's name...")
             name_asked = self.ire.ask_for_name(single_face_path)
             self.print("\nName asked successfully!")
 
