@@ -1,0 +1,34 @@
+[project]
+name = "hippo-id"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Vinlaw Mudehwe", email = "vmudehwe3661@gmail.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "assemblyai>=0.42.0",
+    "chromadb>=1.0.15",
+    "dotenv>=0.9.9",
+    "elevenlabs>=2.7.1",
+    "face-recognition>=1.3.0",
+    "langchain-anthropic>=0.3.17",
+    "langchain-core>=0.3.69",
+    "langchain-google-genai>=2.1.8",
+    "langchain-openai>=0.3.28",
+    "langgraph>=0.5.3",
+    "numpy>=2.2.6",
+    "opencv-python>=4.12.0.88",
+    "pinecone>=7.3.0",
+    "scipy>=1.16.0",
+    "sounddevice>=0.5.2",
+    "uuid>=1.30",
+]
+
+[project.scripts]
+hippo-id = "hippo_id:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
