@@ -1,11 +1,10 @@
 import cv2
 import time 
-from hippo import Hippo
-from utils.helpers import StorageMode, FaceState
+from src.hippo.engine.hippo import Hippo
+from src.hippo.utils.helpers import StorageMode, FaceState
 
 
 hippo = Hippo(database_path="chroma", storage_mode=StorageMode.CHROMA, use_elevenlabs=True, use_assemblyai=True, audio_path="audio.wav", audio_save_directory="./outputs/audio")
-
 
 
 def video_stream():
@@ -40,8 +39,11 @@ def video_stream():
 
         cv2.putText(frame, f"FPS: {fps:.2f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         cv2.imshow("Webcam", frame)
-        result, message = hippo.identify(frame, verbose=True)
-        print((result, message))
+        try:
+            result, message = hippo.identify(frame, verbose=True)
+            print((result, message))
+        except:
+            pass
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
