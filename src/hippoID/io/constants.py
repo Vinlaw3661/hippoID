@@ -1,4 +1,5 @@
 from enum import Enum
+import os
 
 # IO hyperparameters
 class AudioRecordingDurationsInSeconds(Enum):
@@ -27,15 +28,15 @@ class ImageCaptureSettings(Enum):
 
 # IO File and Directory Names   
 class AudioRecordingFileNames(Enum):
-    FILE_NAME = "recording" + '.' + AudioRecordingSettings.FILE_FORMAT.value
-    SAVE_DIRECTORY = "runtime/audio"
-    ASK_NAME_RESPONSE_DIRECTORY = "runtime/audio/ask_name_responses"
+    FILE_NAME = "audio" + '.' + AudioRecordingSettings.FILE_FORMAT.value
+    SAVE_DIRECTORY = os.path.abspath("runtime/audio")
 
 class VideoRecordingFileNames(Enum):
-    FILE_NAME = "recording" + '.' + VideoRecordingSettings.FILE_FORMAT.value
-    SAVE_DIRECTORY = "runtime/video"
+    FILE_NAME = "video" + '.' + VideoRecordingSettings.FILE_FORMAT.value
+    SAVE_DIRECTORY = os.path.abspath("runtime/video")
 
 class ImageCaptureFileNames(Enum):
-    FILE_NAME = "captured_image" + '.' +  ImageCaptureSettings.FILE_FORMAT.value
-    SAVE_DIRECTORY = "runtime/images"
-    FACE_DETECTION_SAVE_DIRECTORY = "runtime/images/detected_faces"
+    FILE_NAME = "image" + '.' +  ImageCaptureSettings.FILE_FORMAT.value
+    MASKED_FILE_NAME = "masked_image" + '.' +  ImageCaptureSettings.FILE_FORMAT.value
+    SAVE_DIRECTORY = os.path.abspath("runtime/image")
+    FACE_DETECTION_SAVE_DIRECTORY = os.path.abspath("runtime/image/detected_faces")

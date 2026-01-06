@@ -2,6 +2,10 @@ from typing import Callable
 from langchain_core.messages import HumanMessage
 import base64
 
+def build_name_extraction_prompt(text: str) -> str:
+    name_extraction_prompt = "Extract the person's name from the following text: " + text
+    return name_extraction_prompt
+
 def build_ask_person_name_prompt() -> HumanMessage:
     ask_person_name_prompt = """
         Please provide the name of the person in the image.
@@ -14,8 +18,7 @@ def build_acknowledgment_prompt(name: str) -> HumanMessage:
         Acknowledge the person named {name} in the provided text.
         Respond with a simple acknowledgment, such as "I acknowledge {name}."
     """
-    return HumanMessage(content=acknowledgment_prompt)
-
+    return acknowledgment_prompt
 def build_physical_description_prompt(image_path: str) -> HumanMessage:
 
     physical_description_prompt = """
@@ -51,3 +54,4 @@ class PromptBuilder:
     ask_name: Callable[[], HumanMessage] = build_ask_person_name_prompt
     acknowledge_name: Callable[[str], HumanMessage] = build_acknowledgment_prompt
     physical_description: Callable[[str], HumanMessage] = build_physical_description_prompt
+    name_extraction: Callable[[str], str] = build_name_extraction_prompt

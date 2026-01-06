@@ -1,4 +1,4 @@
-from hippo_id.models.speech.constants import APIKeys
+from hippoID.models.speech.constants import APIKeys
 import assemblyai as aai
 
 aai.settings.api_key = APIKeys.ASSEMBLYAI_API_KEY.value

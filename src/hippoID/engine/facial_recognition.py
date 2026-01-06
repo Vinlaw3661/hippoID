@@ -1,6 +1,7 @@
 from hippoID.utils.computations import cosine_similarity
 from src.hippoID.engine.constants import RecognitionState
 from src.hippoID.memory.database import LocalVectorCollection
+from src.hippoID.io.constants import ImageCaptureFileNames
 from hippoID.utils.computations import generate_identifier
 from typing import Union, Tuple
 from deepface import DeepFace
@@ -63,7 +64,7 @@ class FacialRecognitionEngine:
         
         return False, RecognitionState.UNKNOWN
     
-    def segment_faces(image: np.ndarray, image_save_path: str = "./outputs/faces") -> tuple[np.ndarray,str, bool]:
+    def segment_faces(image: np.ndarray, image_save_path: str = ImageCaptureFileNames.FACE_DETECTION_SAVE_DIRECTORY.value) -> tuple[np.ndarray,str, bool]:
         mp_face_detection = mp.solutions.face_detection
         face_detection = mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.5)
 
@@ -89,7 +90,7 @@ class FacialRecognitionEngine:
             h = min(height - y, h)
 
             face_roi = image[y:y+h, x:x+w]
-            ouput_path = f"{image_save_path}/masked_image.png"
+            ouput_path = f"{image_save_path}/{ImageCaptureFileNames.MASKED_FILE_NAME.value}"
             os.makedirs(os.path.dirname(ouput_path), exist_ok=True)
             cv2.imwrite(ouput_path, face_roi)
             return face_roi, ouput_path, True
