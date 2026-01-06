@@ -1,7 +1,7 @@
 from hippo_id.io.constants import (AUDIO_RECORDING_FILE_NAME, AUDIO_SAMPLING_FREQUENCY, AUDIO_RECORDING_SAVE_DIRECTORY, AUDIO_RECORDING_DURATIONS_IN_SECONDS, AUDIO_ASK_NAME_RESPONSE_DIRECTORY,
                                    VIDEO_STREAMING_SAVE_DIRECTORY, VIDEO_RECORDING_FILE_NAME, VIDEO_RECORDING_SAVE_DIRECTORY, VIDEO_RECORDING_DURATIONS_IN_SECONDS, 
                                    IMAGE_CAPTURE_FILE_NAME, IMAGE_CAPTURE_SAVE_DIRECTORY, IMAGE_FACE_DETECTION_SAVE_DIRECTORY, VIDEO_FRAMES_PER_SECOND, VIDEO_FOUR_CHARACTER_CODEC_CODE, VIDEO_FRAME_WIDTH, VIDEO_FRAME_HEIGHT  )
-from hippo_id.utils.utils import ensure_directory_exists
+from hippo_id.utils.processing import ensure_directory_exists
 from hippo_id.io.decorators import DecoratedUtils
 import sounddevice as sd
 import cv2
