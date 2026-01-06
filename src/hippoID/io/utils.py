@@ -1,10 +1,10 @@
-from hippoID.io.constants import (
+from src.hippoID.io.constants import (
     AudioRecordingDurationsInSeconds, AudioRecordingSettings, 
     AudioRecordingFileNames, VideoRecordingFileNames,
     VideoRecordingSettings, ImageCaptureFileNames
 )
-from hippoID.utils.processing import ensure_directory_exists
-from hippoID.io.decorators import DecoratedUtils
+from src.hippoID.utils.processing import ensure_directory_exists
+from src.hippoID.io.decorators import DecoratedUtils
 import sounddevice as sd
 import cv2
 from scipy.io.wavfile import write

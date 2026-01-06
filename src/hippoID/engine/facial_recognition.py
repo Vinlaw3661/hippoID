@@ -1,8 +1,8 @@
-from hippoID.utils.computations import cosine_similarity
+from src.hippoID.utils.computations import cosine_similarity
 from src.hippoID.engine.constants import RecognitionState
 from src.hippoID.memory.database import LocalVectorCollection
 from src.hippoID.io.constants import ImageCaptureFileNames
-from hippoID.utils.computations import generate_identifier
+from src.hippoID.utils.computations import generate_identifier
 from typing import Union, Tuple
 from deepface import DeepFace
 import os

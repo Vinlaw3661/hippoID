@@ -1,5 +1,5 @@
 from elevenlabs.client import ElevenLabs
-from hippoID.models.speech.constants import APIKeys
+from src.hippoID.models.speech.constants import APIKeys
 
 ELEVENLABS = ElevenLabs(
     api_key=APIKeys.ELEVENLABS_API_KEY.value,
