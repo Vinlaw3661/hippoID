@@ -95,5 +95,4 @@ class FacialRecognitionEngine:
             cv2.imwrite(ouput_path, face_roi)
             return face_roi, ouput_path, True
         else:
-
-            return np.array([]), RecognitionState.UNDETECTED, False
+            return np.array([]), "", False
