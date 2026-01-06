@@ -1,5 +1,5 @@
 import chromadb
-from hippo_id.memory.constants import IndexNames, APIKeys
+from hippoID.memory.constants import IndexNames
 
 # Set up ChromaDB for persisting embeddings
 chromadb_client = chromadb.PersistentClient()

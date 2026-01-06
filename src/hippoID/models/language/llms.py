@@ -1,8 +1,3 @@
-# src/hippo_id/models/language/llms.py
-"""
-This module defines the language models used in the Hippo ID project.
-It includes configurations for ChatGPT, Claude, and Gemini models.
-"""
 from langchain_anthropic import ChatAnthropic
 from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI

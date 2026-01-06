@@ -1,7 +1,3 @@
-# src/hippo_id/models/speech/stt.py
-""""
-This module defines the speech-to-text (STT) models used in the Hippo ID project.
-"""
 from hippo_id.models.speech.constants import APIKeys
 import assemblyai as aai
 

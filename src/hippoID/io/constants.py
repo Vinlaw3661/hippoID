@@ -1,6 +1,3 @@
-# src/hippo_id/io/constants.py
-
-
 # IO hyperparameters
 AUDIO_RECORDING_DURATIONS_IN_SECONDS = {
     "default": 5, 

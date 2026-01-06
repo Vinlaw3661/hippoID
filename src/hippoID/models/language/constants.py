@@ -1,8 +1,3 @@
-# src/hippo_id/models/language/constants.py
-"""
-This module defines constants used in the Hippo ID language models.
-It includes default model names, parameters, and API keys.
-"""
 import os
 from dotenv import load_dotenv
 
