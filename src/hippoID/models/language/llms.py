@@ -1,7 +1,7 @@
 from langchain_anthropic import ChatAnthropic
 from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
-from hippo_id.models.language.constants import DefaultModels, DefaultParameters, APIKeys
+from hippoID.models.language.constants import DefaultModels, DefaultParameters, APIKeys
 
 CHATGPT = ChatOpenAI(
     model = DefaultModels.CHATGPT,

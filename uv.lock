@@ -542,11 +542,10 @@ wheels = [
 
 [[package]]
 name = "flatbuffers"
-version = "25.2.10"
+version = "25.12.19"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/e4/30/eb5dce7994fc71a2f685d98ec33cc660c0a5887db5610137e60d8cbc4489/flatbuffers-25.2.10.tar.gz", hash = "sha256:97e451377a41262f8d9bd4295cc836133415cc03d8cb966410a4af92eb00d26e", size = 22170, upload-time = "2025-02-11T04:26:46.257Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b8/25/155f9f080d5e4bc0082edfda032ea2bc2b8fab3f4d25d46c1e9dd22a1a89/flatbuffers-25.2.10-py2.py3-none-any.whl", hash = "sha256:ebba5f4d5ea615af3f7fd70fc310636fbb2bbd1f566ac0a23d98dd412de50051", size = 30953, upload-time = "2025-02-11T04:26:44.484Z" },
+    { url = "https://files.pythonhosted.org/packages/e8/2d/d2a548598be01649e2d46231d151a6c56d10b964d94043a335ae56ea2d92/flatbuffers-25.12.19-py2.py3-none-any.whl", hash = "sha256:7634f50c427838bb021c2d66a3d1168e9d199b0607e6329399f04846d42e20b4", size = 26661, upload-time = "2025-12-19T23:16:13.622Z" },
 ]
 
 [[package]]
@@ -804,6 +803,7 @@ dependencies = [
     { name = "langchain-google-genai" },
     { name = "langchain-openai" },
     { name = "langgraph" },
+    { name = "mediapipe" },
     { name = "nanoid" },
     { name = "numpy" },
     { name = "opencv-python" },
@@ -826,6 +826,7 @@ requires-dist = [
     { name = "langchain-google-genai", specifier = ">=2.1.8" },
     { name = "langchain-openai", specifier = ">=0.3.28" },
     { name = "langgraph", specifier = ">=0.5.3" },
+    { name = "mediapipe", specifier = ">=0.10.31" },
     { name = "nanoid", specifier = ">=2.0.0" },
     { name = "numpy", specifier = ">=2.2.6" },
     { name = "opencv-python", specifier = ">=4.12.0.88" },
@@ -1460,6 +1461,22 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba", size = 8729, upload-time = "2022-08-14T12:40:10.846Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8", size = 9979, upload-time = "2022-08-14T12:40:09.779Z" },
+]
+
+[[package]]
+name = "mediapipe"
+version = "0.10.31"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "absl-py" },
+    { name = "flatbuffers" },
+    { name = "numpy" },
+    { name = "sounddevice" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5d/ff/1b283d5fa6920e6a2556b1539c67999295bc5d527b89a8c57c2b052e760f/mediapipe-0.10.31-py3-none-macosx_11_0_arm64.whl", hash = "sha256:efb1eb98da98fe7caea9c692b2f6bd27fd294fd5c680bbd07ddf5552961938f7", size = 19328781, upload-time = "2025-12-18T04:25:55.465Z" },
+    { url = "https://files.pythonhosted.org/packages/07/ce/fe29a74c6af4dae88b0146b4a8c4a79b4ca3cf400ae08dd401a13f52305a/mediapipe-0.10.31-py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:360de896205822419b14d7574c2812e08946769228f7548c31dd871b150d9bcc", size = 10316058, upload-time = "2025-12-18T04:26:07.468Z" },
+    { url = "https://files.pythonhosted.org/packages/51/ad/9df25bef1184611998a37938639f5e48960fd1ec0bf20b95bf4c3b26ffc0/mediapipe-0.10.31-py3-none-win_amd64.whl", hash = "sha256:2f0b97e85101d2d0e326f49fd9b490d6f649a33af4331b2d4873cf1c5a1c627e", size = 10407068, upload-time = "2025-12-18T04:26:28.321Z" },
 ]
 
 [[package]]

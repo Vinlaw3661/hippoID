@@ -19,6 +19,7 @@ dependencies = [
     "langchain-google-genai>=2.1.8",
     "langchain-openai>=0.3.28",
     "langgraph>=0.5.3",
+    "mediapipe>=0.10.31",
     "nanoid>=2.0.0",
     "numpy>=2.2.6",
     "opencv-python>=4.12.0.88",
