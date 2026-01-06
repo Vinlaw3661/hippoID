@@ -1,24 +1,25 @@
-from hippoID.io.constants import (AUDIO_RECORDING_FILE_NAME, AUDIO_SAMPLING_FREQUENCY, AUDIO_RECORDING_SAVE_DIRECTORY, AUDIO_RECORDING_DURATIONS_IN_SECONDS, AUDIO_ASK_NAME_RESPONSE_DIRECTORY,
-                                   VIDEO_STREAMING_SAVE_DIRECTORY, VIDEO_RECORDING_FILE_NAME, VIDEO_RECORDING_SAVE_DIRECTORY, VIDEO_RECORDING_DURATIONS_IN_SECONDS, 
-                                   IMAGE_CAPTURE_FILE_NAME, IMAGE_CAPTURE_SAVE_DIRECTORY, IMAGE_FACE_DETECTION_SAVE_DIRECTORY, VIDEO_FRAMES_PER_SECOND, VIDEO_FOUR_CHARACTER_CODEC_CODE, VIDEO_FRAME_WIDTH, VIDEO_FRAME_HEIGHT  )
+from hippoID.io.constants import (
+    AudioRecordingDurationsInSeconds, AudioRecordingSettings, 
+    AudioRecordingFileNames, VideoRecordingFileNames,
+    VideoRecordingSettings, ImageCaptureFileNames
+)
 from hippoID.utils.processing import ensure_directory_exists
 from hippoID.io.decorators import DecoratedUtils
 import sounddevice as sd
 import cv2
 from scipy.io.wavfile import write
-from enum import Enum
 from dataclasses import dataclass
 
 
-def record_audio(duration: int = AUDIO_RECORDING_DURATIONS_IN_SECONDS['default'], file_name: str = AUDIO_RECORDING_FILE_NAME, save_directory: str = AUDIO_RECORDING_SAVE_DIRECTORY) -> str:
+def record_audio(duration: int = AudioRecordingDurationsInSeconds.DEFAULT.value, file_name: str = AudioRecordingFileNames.FILE_NAME.value, save_directory: str = AudioRecordingFileNames.SAVE_DIRECTORY.value) -> str:
     ensure_directory_exists(save_directory)
-    audio = sd.rec(int(duration * AUDIO_SAMPLING_FREQUENCY), samplerate=AUDIO_SAMPLING_FREQUENCY, channels=1, dtype='int16')
+    audio = sd.rec(int(duration * AudioRecordingSettings.SAMPLING_FREQUENCY.value), samplerate=AudioRecordingSettings.SAMPLING_FREQUENCY.value, channels=1, dtype='int16')
     sd.wait()
     file_path = f"{save_directory}/{file_name}"
-    write(file_path, AUDIO_SAMPLING_FREQUENCY, audio)
+    write(file_path, AudioRecordingSettings.SAMPLING_FREQUENCY.value, audio)
     return file_path
 
-def capture_image(file_name: str = IMAGE_CAPTURE_FILE_NAME, save_directory: str = IMAGE_CAPTURE_SAVE_DIRECTORY) -> str:
+def capture_image(file_name: str = ImageCaptureFileNames.FILE_NAME.value, save_directory: str = ImageCaptureFileNames.SAVE_DIRECTORY.value) -> str:
     ensure_directory_exists(save_directory)
     camera = cv2.VideoCapture(0)
     ret, frame = camera.read()
@@ -33,12 +34,11 @@ def capture_image(file_name: str = IMAGE_CAPTURE_FILE_NAME, save_directory: str 
         cv2.destroyAllWindows()
         raise Exception("Failed to capture image")
 
-def record_video(file_name: str = VIDEO_RECORDING_FILE_NAME, save_directory: str = VIDEO_RECORDING_SAVE_DIRECTORY) -> str:
+def record_video(file_name: str = VideoRecordingFileNames.FILE_NAME.value, save_directory: str = VideoRecordingFileNames.SAVE_DIRECTORY.value) -> str:
     ensure_directory_exists(save_directory)
     camera = cv2.VideoCapture(0)
-    fourcc = cv2.VideoWriter_fourcc(*VIDEO_FOUR_CHARACTER_CODEC_CODE)
-    out = cv2.VideoWriter(f"{save_directory}/{file_name}", fourcc, VIDEO_FRAMES_PER_SECOND, (VIDEO_FRAME_WIDTH, VIDEO_FRAME_HEIGHT))
-
+    fourcc = cv2.VideoWriter_fourcc(*VideoRecordingSettings.FOUR_CHARACTER_CODEC_CODE.value)
+    out = cv2.VideoWriter(f"{save_directory}/{file_name}", fourcc, VideoRecordingSettings.FRAMES_PER_SECOND.value, (VideoRecordingSettings.FRAME_WIDTH.value, VideoRecordingSettings.FRAME_HEIGHT.value))
     while camera.isOpened():
         ret, frame = camera.read()
         if ret:
@@ -53,7 +53,7 @@ def record_video(file_name: str = VIDEO_RECORDING_FILE_NAME, save_directory: str
     cv2.destroyAllWindows()
 
 def stream_video() -> None:
-    ensure_directory_exists(VIDEO_STREAMING_SAVE_DIRECTORY)
+    ensure_directory_exists(VideoRecordingFileNames.SAVE_DIRECTORY.value)
     camera = cv2.VideoCapture(0)
     while True:
         ret, frame = camera.read()

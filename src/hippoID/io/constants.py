@@ -1,49 +1,41 @@
+from enum import Enum
+
 # IO hyperparameters
-AUDIO_RECORDING_DURATIONS_IN_SECONDS = {
-    "default": 5, 
-    "short": 2,   
-    "long": 10,  
-}  
+class AudioRecordingDurationsInSeconds(Enum):
+    DEFAULT = 5  
+    SHORT = 2    
+    LONG = 10
 
-VIDEO_RECORDING_DURATIONS_IN_SECONDS = {
-    "default": 10, 
-    "short": 5,   
-    "long": 30,  
-}
+class VideoRecordingDurationsInSeconds(Enum):
+    DEFAULT = 10  
+    SHORT = 5    
+    LONG = 30
+    
+class AudioRecordingSettings(Enum):
+    SAMPLING_FREQUENCY = 44100
+    FILE_FORMAT = "wav"
 
-AUDIO_SAMPLING_FREQUENCY = 44100
+class VideoRecordingSettings(Enum):
+    FRAMES_PER_SECOND = 30.0
+    FOUR_CHARACTER_CODEC_CODE = 'XVID'
+    FILE_FORMAT = "avi"
+    FRAME_WIDTH = 640
+    FRAME_HEIGHT = 480 
 
-VIDEO_FRAMES_PER_SECOND = 30.0
+class ImageCaptureSettings(Enum):
+    FILE_FORMAT = "png"
 
-VIDEO_FOUR_CHARACTER_CODEC_CODE = 'XVID'
+# IO File and Directory Names   
+class AudioRecordingFileNames(Enum):
+    FILE_NAME = "recording" + '.' + AudioRecordingSettings.FILE_FORMAT.value
+    SAVE_DIRECTORY = "runtime/audio"
+    ASK_NAME_RESPONSE_DIRECTORY = "runtime/audio/ask_name_responses"
 
-VIDEO_FRAME_WIDTH = 640
+class VideoRecordingFileNames(Enum):
+    FILE_NAME = "recording" + '.' + VideoRecordingSettings.FILE_FORMAT.value
+    SAVE_DIRECTORY = "runtime/video"
 
-VIDEO_FRAME_HEIGHT = 480
-
-# Constants for audio recording
-AUDIO_RECORDING_FILE_FORMAT = "wav"
-
-AUDIO_RECORDING_FILE_NAME = "recording" + '.' + AUDIO_RECORDING_FILE_FORMAT
-
-AUDIO_RECORDING_SAVE_DIRECTORY = "runtime/audio"
-
-AUDIO_ASK_NAME_RESPONSE_DIRECTORY = AUDIO_RECORDING_SAVE_DIRECTORY + "/ask_name_responses"
-
-# Constants for image capture
-IMAGE_CAPTURE_FILE_FORMAT = "png"
-
-IMAGE_CAPTURE_FILE_NAME = "captured_image" + '.' + IMAGE_CAPTURE_FILE_FORMAT
-
-IMAGE_CAPTURE_SAVE_DIRECTORY = "runtime/images"
-
-IMAGE_FACE_DETECTION_SAVE_DIRECTORY = "runtime/images/detected_faces"
-
-# Constants for video recording
-VIDEO_RECORDING_FILE_FORMAT = "avi"
-
-VIDEO_RECORDING_FILE_NAME = "recorded_video" + '.' + VIDEO_RECORDING_FILE_FORMAT
-
-VIDEO_RECORDING_SAVE_DIRECTORY = "runtime/videos"
-
-VIDEO_STREAMING_SAVE_DIRECTORY = "runtime/streaming_videos"
+class ImageCaptureFileNames(Enum):
+    FILE_NAME = "captured_image" + '.' +  ImageCaptureSettings.FILE_FORMAT.value
+    SAVE_DIRECTORY = "runtime/images"
+    FACE_DETECTION_SAVE_DIRECTORY = "runtime/images/detected_faces"
