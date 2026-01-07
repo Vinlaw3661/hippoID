@@ -64,32 +64,40 @@ class FacialRecognitionEngine:
         
         return False, RecognitionState.UNKNOWN
     
+    @staticmethod
     def segment_faces(image: np.ndarray, image_save_path: str = ImageCaptureFileNames.FACE_DETECTION_SAVE_DIRECTORY.value) -> tuple[np.ndarray,str, bool]:
-        mp_face_detection = mp.solutions.face_detection
-        face_detection = mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.5)
-
+        face_detector =  mp.tasks.vision.FaceDetector.create_from_options(
+            mp.tasks.vision.FaceDetectorOptions(
+                running_mode=mp.tasks.vision.RunningMode.IMAGE,
+                min_detection_confidence=0.5,
+                base_options=mp.tasks.BaseOptions(
+                    model_asset_path=os.path.abspath("src/hippoID/models/vision/blaze_face_short_range.tflite")
+                    )
+            )
+        )
     
-        height, width, _ = image.shape
+        # Convert BGR → RGB
+        rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-        results = face_detection.process(image)
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
+
+        results = face_detector.detect(mp_image)
 
         if results.detections:
             detection = results.detections[0]
-            bboxC = detection.location_data.relative_bounding_box
+            bbox= detection.bounding_box
+
+            h, w, _ = image.shape
+            x, y, bw, bh = bbox.origin_x, bbox.origin_y, bbox.width, bbox.height
 
             # Convert bounding box to pixel values
-            x = int(bboxC.xmin * width)
-            y = int(bboxC.ymin * height)
-            w = int(bboxC.width * width)
-            h = int(bboxC.height * height)
-
-            # Ensure coordinates are within image bounds
             x = max(0, x)
             y = max(0, y)
-            w = min(width - x, w)
-            h = min(height - y, h)
+            bw = min(w - x, bw)
+            bh = min(h - y, bh)
 
-            face_roi = image[y:y+h, x:x+w]
+            face_roi = image[y:y+bh, x:x+bw]
+
             ouput_path = f"{image_save_path}/{ImageCaptureFileNames.MASKED_FILE_NAME.value}"
             os.makedirs(os.path.dirname(ouput_path), exist_ok=True)
             cv2.imwrite(ouput_path, face_roi)
