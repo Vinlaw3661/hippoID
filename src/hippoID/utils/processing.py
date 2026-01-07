@@ -2,7 +2,6 @@ import os
 import cv2
 import time
 from typing import Callable 
-from src.hippoID.engine.hippo import Hippo
 
 def do_not_print(text: str) -> None:
     return 
@@ -16,7 +15,7 @@ def ensure_directory_exists(directory: str) -> None:
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-def video_stream(hippo: Hippo, print_fn: Callable[[str], None]) -> None:
+def video_stream(hippo, print_fn: Callable[[str], None]) -> None:
     cap = cv2.VideoCapture(0)
 
     if not cap.isOpened():
@@ -47,7 +46,7 @@ def video_stream(hippo: Hippo, print_fn: Callable[[str], None]) -> None:
 
         cv2.putText(frame, f"FPS: {fps:.2f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         cv2.imshow("Webcam", frame)
-        result, message = hippo.identify(frame, verbose=True)
+        result, message = hippo.identify(frame)
         print_fn((result, message))
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
