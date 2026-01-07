@@ -26,6 +26,7 @@ dependencies = [
     "pinecone>=7.3.0",
     "scipy>=1.16.0",
     "sounddevice>=0.5.2",
+    "tf-keras>=2.20.1",
     "uuid>=1.30",
 ]
 
