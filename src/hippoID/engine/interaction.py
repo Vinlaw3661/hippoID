@@ -1,5 +1,5 @@
 import assemblyai as aai
-from elevenlabs.client import VoiceSettings, stream
+from elevenlabs import VoiceSettings, stream
 from src.hippoID.models.language.llms import DefaultLLM
 from src.hippoID.models.language.schemas import PersonName
 from src.hippoID.io.utils import record_audio
@@ -7,7 +7,7 @@ from src.hippoID.models.speech.stt import DefaultSTT
 from src.hippoID.models.speech.tts import DefaultTTS
 from src.hippoID.models.language.llms import DefaultLLM
 from src.hippoID.models.language.prompts import PromptBuilder
-from src.hippoID.engine.constants import ElevenLabsConfig   
+from src.hippoID.engine.constants import ElevenLabsConfig
 from src.hippoID.io.constants import AudioRecordingFileNames
 
 class InteractionEngine:
@@ -28,19 +28,18 @@ class InteractionEngine:
         response = self.llm.invoke(physical_description_prompt).content
         return response
 
-    def ask_for_name(self, person_image_path: str) -> bool:
-        description = self.describe_person(person_image_path)
+    def ask_for_name(self, description: str) -> bool:
 
         # There is repeated code here for TTS. I will refactor later into a separate class
         # with common TTS functionality and finegrained control over voice settings.
-        audio_stream = self.tts.text_to_speech.convert_as_stream(
+        audio_stream = self.tts.text_to_speech.stream(
             text=description,
-            voice_id=ElevenLabsConfig.VOICE_ID,
-            model_id=ElevenLabsConfig.TTS_MODEL_ID,
+            voice_id=ElevenLabsConfig.VOICE_ID.value,
+            model_id=ElevenLabsConfig.TTS_MODEL_ID.value,
             voice_settings=VoiceSettings(
-                stability=ElevenLabsConfig.STABILITY,
-                similarity_boost=ElevenLabsConfig.SIMILARITY_BOOST,
-                use_speaker_boost=ElevenLabsConfig.USE_SPEAKER_BOOST
+                stability=ElevenLabsConfig.STABILITY.value,
+                similarity_boost=ElevenLabsConfig.SIMILARITY_BOOST.value,
+                use_speaker_boost=ElevenLabsConfig.USE_SPEAKER_BOOST.value
             )
         )
         stream(audio_stream)
@@ -59,18 +58,19 @@ class InteractionEngine:
             return name.lower()
 
     def acknowledge_person(self, name:str) -> None:
-        acknowledgment_text = self.prompt_builder.acknowledge_name(name)   
+        acknowledgment_prompt = self.prompt_builder.acknowledge_name(name)   
+        acknowledgment_text = self.llm.invoke(acknowledgment_prompt).content
 
         # There is repeated code here for TTS. I will refactor later into a separate class
         # with common TTS functionality and finegrained control over voice settings.
-        audio_stream = self.tts.text_to_speech.convert_as_stream(
+        audio_stream = self.tts.text_to_speech.stream(
             text=acknowledgment_text,
-            voice_id=ElevenLabsConfig.VOICE_ID,
-            model_id=ElevenLabsConfig.TTS_MODEL_ID,
+            voice_id=ElevenLabsConfig.VOICE_ID.value,
+            model_id=ElevenLabsConfig.TTS_MODEL_ID.value,
             voice_settings=VoiceSettings(
-                stability=ElevenLabsConfig.STABILITY,
-                similarity_boost=ElevenLabsConfig.SIMILARITY_BOOST,
-                use_speaker_boost=ElevenLabsConfig.USE_SPEAKER_BOOST
+                stability=ElevenLabsConfig.STABILITY.value,
+                similarity_boost=ElevenLabsConfig.SIMILARITY_BOOST.value,
+                use_speaker_boost=ElevenLabsConfig.USE_SPEAKER_BOOST.value
             )
         )
         stream(audio_stream)
