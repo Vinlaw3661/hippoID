@@ -13,7 +13,7 @@ import numpy as np
 class Hippo:
     def __init__(
             self, 
-            llm_model = DefaultLLM.chatgpt, 
+            llm_model = DefaultLLM.claude, 
             tts_model = DefaultTTS.elevenlabs, 
             stt_model = DefaultSTT.assemblyai, 
             fre_engine = FacialRecognitionEngine(),
@@ -45,14 +45,18 @@ class Hippo:
             single_face, single_face_path = segmented_face, face_path
             self.print(f"\nIdentifying person...")
 
-            is_known, possible_name = self.fre.is_known_face(single_face_path)
+            face_embedding = self.fre.create_face_embedding(single_face_path)
+            is_known, possible_name = self.fre.is_known_face(face_embedding)
 
             if is_known:
                 self.print(f"\nPerson already known!: {possible_name}")
                 return False, possible_name
             
+            self.print("\nGenerating physical description...")
+            description = self.ire.describe_person(single_face_path)
+            
             self.print("\nAsking for person's name...")
-            name_asked = self.ire.ask_for_name(single_face_path)
+            name_asked = self.ire.ask_for_name(description)
             self.print("\nName asked successfully!")
 
             if name_asked:
@@ -61,7 +65,7 @@ class Hippo:
                 self.print(f"\nName captured as: {name}")
 
                 self.print(f"\nSaving identity to database...")
-                self.fre.store_face_embedding(single_face_path, name)
+                self.fre.store_face_embedding(face_embedding, name)
                 
                 self.print("\nIdentity saved!")
                 self.ire.acknowledge_person(name)
