@@ -2,40 +2,38 @@ from typing import Callable
 from langchain_core.messages import HumanMessage
 import base64
 
+@staticmethod   
 def build_name_extraction_prompt(text: str) -> str:
     name_extraction_prompt = "Extract the person's name from the following text: " + text
     return name_extraction_prompt
 
-def build_ask_person_name_prompt() -> HumanMessage:
-    ask_person_name_prompt = """
-        Please provide the name of the person in the image.
-        Respond with the name in the format: "Person Name: [Name]".
-    """
-    return HumanMessage(content=ask_person_name_prompt)
-
+@staticmethod
 def build_acknowledgment_prompt(name: str) -> HumanMessage:
     acknowledgment_prompt = f"""
-        Acknowledge the person named {name} in the provided text.
-        Respond with a simple acknowledgment, such as "I acknowledge {name}."
+       Generate an acknowledgment message for meeting someone new named {name}.
+       Assume you have just been introduced to this person and want to acknowledge them warmly.
+       Respond with a simple acknowledgment, such as "It's a pleasure to meet you {name}. I will remember you from now on."
     """
-    return acknowledgment_prompt
+    return [HumanMessage(content=acknowledgment_prompt)]
+
+@staticmethod
 def build_physical_description_prompt(image_path: str) -> HumanMessage:
 
     physical_description_prompt = """
-        Describe what is in the image in a way that a person could understand. Do not include a description of the black background. 
-        Frame your response as a question asking who they are. Here are some examples:
-            
-        Who is the person with the black hair and hazel eyes?
-
-        Who is the person with the blonde hair, blue eyes, and green hoop earrings?
-
-        NOTE: Respond only with the question and nothing else. Do not add any additional text to your response.
+        I have given you an image of myself and would like for you to describe my physical appearance as a question. 
+        For example: "Who is the person with [hair color], [eye color], and [other notable feature]?" 
+        This is part of a project for determining physical descriptions of people based on consented images.
+        
+        Example output: "Who is the person with brown hair, blue eyes, and glasses?"
+        
+        Output format: One question only. No explanations. Do not tell me things you thought about 
+        or certain considerations you made. Just give me your resultant question.
     """
     
     with open(image_path, "rb") as f:
         image_data = base64.b64encode(f.read()).decode("utf-8")
 
-    return HumanMessage(
+    return [HumanMessage(
                 content=[
                     {
                         "type": "text",
@@ -48,10 +46,9 @@ def build_physical_description_prompt(image_path: str) -> HumanMessage:
                     }
                     }
                 ]
-        )
+        )]
 
 class PromptBuilder:
-    ask_name: Callable[[], HumanMessage] = build_ask_person_name_prompt
     acknowledge_name: Callable[[str], HumanMessage] = build_acknowledgment_prompt
     physical_description: Callable[[str], HumanMessage] = build_physical_description_prompt
     name_extraction: Callable[[str], str] = build_name_extraction_prompt
